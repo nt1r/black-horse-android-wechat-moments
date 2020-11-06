@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WeChat Monments</string>
     <string name="user_nick">User</string>
+    <string name="colon">: </string>
 </resources>

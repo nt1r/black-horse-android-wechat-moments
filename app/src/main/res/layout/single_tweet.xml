@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tweet_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sender_avatar"
+        android:layout_width="@dimen/sender_avatar_width"
+        android:layout_height="@dimen/sender_avatar_height"
+        android:layout_marginStart="@dimen/sender_avatar_margin_start"
+        android:layout_marginTop="@dimen/sender_avatar_margin_top" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/base_margin"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/sender_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sender_nick_name_margin_start"
+            android:layout_marginTop="@dimen/sender_nick_name_margin_top"
+            android:textSize="@dimen/sender_nick_name_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tweet_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tweet_content_margin_top"
+            android:textSize="@dimen/tweet_content_text_size"
+            app:layout_constraintStart_toStartOf="@+id/sender_nick_name"
+            app:layout_constraintTop_toBottomOf="@+id/sender_nick_name" />
+
+        <GridView
+            android:id="@+id/tweet_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tweet_grid_view_height"
+            android:layout_marginTop="@dimen/tweet_grid_view_margin_top"
+            android:columnWidth="@dimen/multiple_content_image_width"
+            android:horizontalSpacing="@dimen/tweet_grid_view_horizontal_spacing"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/tweet_grid_view_vertical_spacing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tweet_content" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/comments_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/comments_linear_layout_margin_top"
+            android:background="@color/comments_linear_layout_background_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tweet_grid_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
