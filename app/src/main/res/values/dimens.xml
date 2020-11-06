@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="background_image_height">512dp</dimen>
+    <dimen name="background_image_height">288dp</dimen>
+    <dimen name="avatar_width">64dp</dimen>
+    <dimen name="avatar_height">64dp</dimen>
+    <dimen name="base_margin">28dp</dimen>
+    <dimen name="half_avatar_height">240dp</dimen>
+    <dimen name="sender_avatar_width">32dp</dimen>
+    <dimen name="sender_avatar_height">32dp</dimen>
+    <dimen name="user_nick_margin_top">12dp</dimen>
+    <dimen name="user_nick_margin_end">16dp</dimen>
+    <dimen name="content_list_linear_layout_margin_top">48dp</dimen>
+    <dimen name="sender_avatar_margin_top">12dp</dimen>
+    <dimen name="sender_avatar_margin_start">8dp</dimen>
+
+    <!--text size-->
+    <dimen name="user_nick_name_text_size">18sp</dimen>
+    <dimen name="sender_nick_name_text_size">18sp</dimen>
+    <dimen name="sender_nick_name_margin_top">4dp</dimen>
+    <dimen name="sender_nick_name_margin_end">8dp</dimen>
 </resources>

@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".views.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/swipe_refresh_layout"
+        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/background_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/background_image_height"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/sample_bg"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/avatar_width"
+            android:layout_height="@dimen/avatar_height"
+            android:layout_marginTop="@dimen/half_avatar_height"
+            android:layout_marginEnd="@dimen/base_margin"
+            android:src="@drawable/avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/background_image_view" />
+
+        <TextView
+            android:id="@+id/user_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/user_nick_margin_top"
+            android:layout_marginEnd="@dimen/user_nick_margin_end"
+            android:text="@string/user_nick"
+            android:textColor="@color/white"
+            android:textSize="@dimen/user_nick_name_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/user_avatar"
+            app:layout_constraintTop_toTopOf="@+id/user_avatar" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/content_list_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_list_linear_layout_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/background_image_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,4 @@
-package com.example.wechat_monments
+package com.example.wechat_moments
 
 import org.junit.Test
 

@@ -1,8 +1,10 @@
-package com.example.wechat_monments
+package com.example.wechat_moments.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.wechat_moments.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -15,6 +17,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initComponents() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
 
         swipeRefreshLayout.setOnRefreshListener {
