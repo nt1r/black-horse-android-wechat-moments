@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/comment_linear_layout_padding_horizontal"
+    android:paddingVertical="@dimen/comment_linear_layout_padding_vertical">
 
     <TextView
         android:id="@+id/comment_nick_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/nick_name_color"
         android:textSize="@dimen/comment_nick_name_text_size" />
 
     <TextView

@@ -1,4 +1,4 @@
-package com.example.wechat_moments.remote
+package com.example.wechat_moments.remote.utils
 
 import com.example.wechat_moments.viewmodels.User
 import com.google.gson.JsonDeserializationContext

@@ -4,29 +4,35 @@
     <dimen name="avatar_width">64dp</dimen>
     <dimen name="avatar_height">64dp</dimen>
     <dimen name="base_margin">28dp</dimen>
+    <dimen name="base_padding">18dp</dimen>
     <dimen name="half_avatar_height">240dp</dimen>
-    <dimen name="sender_avatar_width">32dp</dimen>
-    <dimen name="sender_avatar_height">32dp</dimen>
+    <dimen name="sender_avatar_width">48dp</dimen>
+    <dimen name="sender_avatar_height">48dp</dimen>
     <dimen name="user_nick_margin_top">12dp</dimen>
     <dimen name="user_nick_margin_end">16dp</dimen>
     <dimen name="tweet_list_linear_layout_margin_top">48dp</dimen>
     <dimen name="sender_avatar_margin_top">12dp</dimen>
     <dimen name="sender_avatar_margin_start">8dp</dimen>
     <dimen name="sender_nick_name_margin_top">8dp</dimen>
-    <dimen name="sender_nick_name_margin_start">4dp</dimen>
+    <dimen name="tweet_content_layout_margin_start">8dp</dimen>
     <dimen name="tweet_content_margin_top">4dp</dimen>
     <dimen name="tweet_grid_view_height">128dp</dimen>
-
-    <!--text size-->
-    <dimen name="user_nick_name_text_size">18sp</dimen>
-    <dimen name="sender_nick_name_text_size">18sp</dimen>
-    <dimen name="tweet_content_text_size">18sp</dimen>
     <dimen name="tweet_grid_view_margin_top">4dp</dimen>
-    <dimen name="multiple_content_image_width">128dp</dimen>
+    <dimen name="multiple_content_image_height">128dp</dimen>
     <dimen name="tweet_grid_view_horizontal_spacing">4dp</dimen>
     <dimen name="tweet_grid_view_vertical_spacing">4dp</dimen>
     <dimen name="comments_linear_layout_margin_top">8dp</dimen>
-    <dimen name="comment_nick_name_text_size">18sp</dimen>
-    <dimen name="comment_content_text_size">18sp</dimen>
+    <dimen name="comment_linear_layout_padding_horizontal">8dp</dimen>
+    <dimen name="comment_linear_layout_padding_vertical">4dp</dimen>
+    <dimen name="tweet_list_linear_layout_margin_horizontal">16dp</dimen>
+    <dimen name="tweet_linear_layout_padding_top">8dp</dimen>
+    <dimen name="tweet_linear_layout_padding_bottom">8dp</dimen>
+
+    <!--text size-->
+    <dimen name="user_nick_name_text_size">18sp</dimen>
+    <dimen name="sender_nick_name_text_size">16sp</dimen>
+    <dimen name="tweet_content_text_size">16sp</dimen>
+    <dimen name="comment_nick_name_text_size">16sp</dimen>
+    <dimen name="comment_content_text_size">16sp</dimen>
 
 </resources>

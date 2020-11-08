@@ -1,12 +1,11 @@
-package com.example.wechat_moments.remote
+package com.example.wechat_moments.remote.utils
 
+import com.example.wechat_moments.remote.AbstractTweet
+import com.example.wechat_moments.remote.TweetError
 import com.example.wechat_moments.viewmodels.Comment
 import com.example.wechat_moments.viewmodels.Tweet
 import com.example.wechat_moments.viewmodels.User
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
+import com.google.gson.*
 import java.lang.reflect.Type
 
 class TweetDeserializer : JsonDeserializer<AbstractTweet> {
@@ -16,7 +15,7 @@ class TweetDeserializer : JsonDeserializer<AbstractTweet> {
                 "json null"
             )
         }
-        val jsonObject = json.asJsonObject
+        val jsonObject: JsonObject = json.asJsonObject
         if (!jsonObject.keySet().contains("sender")) {
             return TweetError(
                 "invalid json"

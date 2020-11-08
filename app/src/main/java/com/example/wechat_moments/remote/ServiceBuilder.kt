@@ -1,6 +1,7 @@
 package com.example.wechat_moments.remote
 
-import com.example.wechat_moments.viewmodels.Tweet
+import com.example.wechat_moments.remote.utils.TweetDeserializer
+import com.example.wechat_moments.remote.utils.UserDeserializer
 import com.example.wechat_moments.viewmodels.User
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit

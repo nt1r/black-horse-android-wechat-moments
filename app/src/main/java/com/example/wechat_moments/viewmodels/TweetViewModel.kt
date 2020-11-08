@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wechat_moments.remote.RemoteDataSource
+import com.example.wechat_moments.remote.TweetError
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

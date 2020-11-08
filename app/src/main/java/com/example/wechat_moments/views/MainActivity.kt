@@ -1,19 +1,21 @@
 package com.example.wechat_moments.views
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.view.View.GONE
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.wechat_moments.R
 import com.example.wechat_moments.databinding.ActivityMainBinding
+import com.example.wechat_moments.databinding.SingleCommentBinding
+import com.example.wechat_moments.databinding.SingleTweetBinding
 import com.example.wechat_moments.viewmodels.Tweet
 import com.example.wechat_moments.viewmodels.TweetViewModel
 import com.example.wechat_moments.viewmodels.User
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "Wechat"
@@ -43,7 +45,71 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun adaptTweets(tweets: List<Tweet>) {
-        Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(tweets))
+        tweets.forEach { tweet ->
+            // Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(tweet))
+            val tweetView = layoutInflater.inflate(R.layout.single_tweet, null)
+            val tweetBinding = SingleTweetBinding.bind(tweetView)
+
+            Glide.with(tweetView.context)
+                .load(tweet.sender.avatar)
+                .into(tweetBinding.senderAvatar)
+
+            adaptTextViews(tweetBinding, tweet)
+            adaptTweetsImages(tweet, tweetBinding, tweetView)
+            adaptTweetsComments(tweet, tweetBinding)
+
+            binding.tweetListLinearLayout.addView(tweetView)
+        }
+    }
+
+    private fun adaptTextViews(
+        tweetBinding: SingleTweetBinding,
+        tweet: Tweet
+    ) {
+        tweetBinding.senderNickName.text = tweet.sender.nick
+        if (tweet.content == "") {
+            tweetBinding.tweetContent.visibility = GONE
+        } else {
+            tweetBinding.tweetContent.text = tweet.content
+        }
+    }
+
+    private fun adaptTweetsComments(
+        tweet: Tweet,
+        tweetBinding: SingleTweetBinding
+    ) {
+        if (tweet.comments.isNotEmpty()) {
+            tweet.comments.forEach { comment ->
+                val commentView = layoutInflater.inflate(R.layout.single_comment, null)
+                val commentBinding = SingleCommentBinding.bind(commentView)
+                commentBinding.commentNickName.text = comment.sender.nick
+                commentBinding.commentContent.text = comment.content
+                tweetBinding.commentsLinearLayout.addView(commentView)
+            }
+        } else {
+            tweetBinding.commentsLinearLayout.visibility = GONE
+        }
+    }
+
+    private fun adaptTweetsImages(
+        tweet: Tweet,
+        tweetBinding: SingleTweetBinding,
+        tweetView: View
+    ) {
+        if (tweet.images.isEmpty()) {
+            tweetBinding.tweetFlexboxLayout.visibility = GONE
+        }
+
+        tweet.images.forEach { imageUrl ->
+            val imageView = ImageView(tweetView.context)
+            Glide.with(imageView)
+                .load(imageUrl)
+                .into(imageView)
+            tweetBinding.tweetFlexboxLayout.addView(imageView)
+        }
+        /*val imageAdapter = ImageAdapter(tweetView.context, tweet.images)
+        tweetBinding.tweetGridView.adapter = imageAdapter
+        imageAdapter.notifyDataSetChanged()*/
     }
 
     private fun adaptUserViews(user: User?) {
