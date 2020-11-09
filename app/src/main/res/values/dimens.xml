@@ -18,7 +18,7 @@
     <dimen name="tweet_content_margin_top">4dp</dimen>
     <dimen name="tweet_grid_view_height">128dp</dimen>
     <dimen name="tweet_grid_view_margin_top">4dp</dimen>
-    <dimen name="multiple_content_image_height">128dp</dimen>
+    <dimen name="multiple_content_image_height">96dp</dimen>
     <dimen name="tweet_grid_view_horizontal_spacing">4dp</dimen>
     <dimen name="tweet_grid_view_vertical_spacing">4dp</dimen>
     <dimen name="comments_linear_layout_margin_top">8dp</dimen>
@@ -39,5 +39,7 @@
     <dimen name="loading_icon_height">28dp</dimen>
     <dimen name="loading_icon_width">28dp</dimen>
     <dimen name="loading_icon_margin_horizontal">8dp</dimen>
+    <dimen name="multiple_content_image_width">96dp</dimen>
+    <dimen name="comments_linear_layout_margin_bottom">8dp</dimen>
 
 </resources>

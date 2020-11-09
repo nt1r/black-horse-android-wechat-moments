@@ -1,7 +1,6 @@
 package com.example.wechat_moments.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -19,6 +18,7 @@ import com.example.wechat_moments.databinding.SingleTweetBinding
 import com.example.wechat_moments.viewmodels.Tweet
 import com.example.wechat_moments.viewmodels.TweetViewModel
 import com.example.wechat_moments.viewmodels.User
+import com.example.wechat_moments.views.adapters.ImageAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -113,20 +113,31 @@ class MainActivity : AppCompatActivity() {
         tweetBinding: SingleTweetBinding,
         tweetView: View
     ) {
-        if (tweet.images.isEmpty()) {
-            tweetBinding.tweetFlexboxLayout.visibility = GONE
+        when (tweet.images.size) {
+            1 -> {
+                val imageView = ImageView(tweetView.context)
+                Glide.with(this)
+                    .load(tweet.images[0])
+                    .into(imageView)
+                tweetBinding.tweetFlexboxLayout.addView(imageView)
+                tweetBinding.tweetFlexboxLayout.visibility = VISIBLE
+            }
+            2, 3 -> {
+                val imageAdapterFirst = ImageAdapter(tweetView.context, tweet.images, layoutInflater)
+                tweetBinding.gridViewFirstLine.adapter = imageAdapterFirst
+                tweetBinding.gridViewFirstLine.visibility = VISIBLE
+            }
+            4, 5, 6 -> {
+                val imageAdapterFirst = ImageAdapter(tweetView.context, tweet.images.subList(0, 3), layoutInflater)
+                val imageAdapterSecond = ImageAdapter(tweetView.context, tweet.images.subList(3, tweet.images.size), layoutInflater)
+                tweetBinding.gridViewFirstLine.adapter = imageAdapterFirst
+                tweetBinding.gridViewSecondLine.adapter = imageAdapterSecond
+                tweetBinding.gridViewFirstLine.visibility = VISIBLE
+                tweetBinding.gridViewSecondLine.visibility = VISIBLE
+            }
+            else -> {
+            }
         }
-
-        tweet.images.forEach { imageUrl ->
-            val imageView = ImageView(tweetView.context)
-            Glide.with(imageView)
-                .load(imageUrl)
-                .into(imageView)
-            tweetBinding.tweetFlexboxLayout.addView(imageView)
-        }
-        /*val imageAdapter = ImageAdapter(tweetView.context, tweet.images)
-        tweetBinding.tweetGridView.adapter = imageAdapter
-        imageAdapter.notifyDataSetChanged()*/
     }
 
     private fun adaptUserViews(user: User?) {

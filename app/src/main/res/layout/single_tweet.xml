@@ -46,21 +46,54 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/multiple_content_image_height"
             android:layout_marginTop="@dimen/tweet_grid_view_margin_top"
+            android:layout_marginBottom="@dimen/comments_linear_layout_margin_top"
+            android:visibility="gone"
             app:alignContent="stretch"
             app:alignItems="stretch"
             app:flexWrap="wrap"
+            app:layout_constraintBottom_toTopOf="@+id/comments_linear_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tweet_content" />
+
+        <GridView
+            android:id="@+id/grid_view_first_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/multiple_content_image_height"
+            android:layout_marginTop="@dimen/tweet_grid_view_margin_top"
+            android:layout_marginBottom="@dimen/comments_linear_layout_margin_top"
+            android:columnWidth="@dimen/multiple_content_image_width"
+            android:horizontalSpacing="@dimen/tweet_grid_view_horizontal_spacing"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/grid_view_second_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tweet_content" />
+
+        <GridView
+            android:id="@+id/grid_view_second_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/multiple_content_image_height"
+            android:layout_marginTop="@dimen/tweet_grid_view_margin_top"
+            android:layout_marginBottom="@dimen/comments_linear_layout_margin_top"
+            android:columnWidth="@dimen/multiple_content_image_width"
+            android:horizontalSpacing="@dimen/tweet_grid_view_horizontal_spacing"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/comments_linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grid_view_first_line" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/comments_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/comments_linear_layout_margin_top"
+            android:layout_marginBottom="@dimen/comments_linear_layout_margin_bottom"
             android:background="@color/comments_linear_layout_background_color"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tweet_flexbox_layout" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
