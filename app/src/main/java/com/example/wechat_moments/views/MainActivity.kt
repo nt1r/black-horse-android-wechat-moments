@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 import com.example.wechat_moments.R
 import com.example.wechat_moments.databinding.ActivityMainBinding
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "Wechat"
     private lateinit var binding: ActivityMainBinding
     private lateinit var loadingView: View
-    private val tweetViewModel: TweetViewModel by viewModels()
+    val tweetViewModel: TweetViewModel by viewModels()
 
     private var lastShownTweetCount = 0
 
@@ -58,22 +59,24 @@ class MainActivity : AppCompatActivity() {
             loadingView.visibility = GONE
         }
 
-        tweets.subList(lastShownTweetCount, tweets.size).forEach { tweet ->
-            // Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(tweet))
-            val tweetView = layoutInflater.inflate(R.layout.single_tweet, null)
-            val tweetBinding = SingleTweetBinding.bind(tweetView)
+        if (tweets.size >= lastShownTweetCount) {
+            tweets.subList(lastShownTweetCount, tweets.size).forEach { tweet ->
+                // Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(tweet))
+                val tweetView = layoutInflater.inflate(R.layout.single_tweet, null)
+                val tweetBinding = SingleTweetBinding.bind(tweetView)
 
-            Glide.with(tweetView.context)
-                .load(tweet.sender.avatar)
-                .into(tweetBinding.senderAvatar)
+                Glide.with(tweetView.context)
+                    .load(tweet.sender.avatar)
+                    .into(tweetBinding.senderAvatar)
 
-            adaptTextViews(tweetBinding, tweet)
-            adaptTweetsImages(tweet, tweetBinding, tweetView)
-            adaptTweetsComments(tweet, tweetBinding)
+                adaptTextViews(tweetBinding, tweet)
+                adaptTweetsImages(tweet, tweetBinding, tweetView)
+                adaptTweetsComments(tweet, tweetBinding)
 
-            binding.tweetListLinearLayout.addView(tweetView)
+                binding.tweetListLinearLayout.addView(tweetView)
+            }
+            lastShownTweetCount = tweets.size
         }
-        lastShownTweetCount = tweets.size
     }
 
     private fun adaptTextViews(
@@ -174,5 +177,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun isScrollViewReachBottom(nestedScrollView: NestedScrollView): Boolean {
         return nestedScrollView.getChildAt(0).bottom <= nestedScrollView.height + nestedScrollView.scrollY
+    }
+
+    fun getTweetLiveData(): LiveData<List<Tweet>> {
+        return tweetViewModel.tweetsLiveData
+    }
+
+    fun getUserLiveData(): LiveData<User> {
+        return tweetViewModel.userLiveData
     }
 }

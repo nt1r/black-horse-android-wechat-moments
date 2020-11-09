@@ -38,6 +38,7 @@ class TweetViewModel : ViewModel() {
     )
     private val PER_REFRESH_COUNT = 5
 
+    // for test inject
     fun setRepository(repository: IRepository) {
         this.repository = repository
     }
