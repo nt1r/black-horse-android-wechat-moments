@@ -1,13 +1,15 @@
 package com.example.wechat_moments.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.core.widget.NestedScrollView
 import com.bumptech.glide.Glide
 import com.example.wechat_moments.R
 import com.example.wechat_moments.databinding.ActivityMainBinding
@@ -16,12 +18,18 @@ import com.example.wechat_moments.databinding.SingleTweetBinding
 import com.example.wechat_moments.viewmodels.Tweet
 import com.example.wechat_moments.viewmodels.TweetViewModel
 import com.example.wechat_moments.viewmodels.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "Wechat"
     private lateinit var binding: ActivityMainBinding
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var loadingView: View
     private val tweetViewModel: TweetViewModel by viewModels()
+
+    private var lastShownTweetCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +53,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun adaptTweets(tweets: List<Tweet>) {
-        tweets.forEach { tweet ->
+        if (loadingView.visibility == VISIBLE) {
+            binding.tweetListLinearLayout.removeViewAt(binding.tweetListLinearLayout.childCount - 1)
+            loadingView.visibility = GONE
+        }
+
+        tweets.subList(lastShownTweetCount, tweets.size).forEach { tweet ->
             // Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(tweet))
             val tweetView = layoutInflater.inflate(R.layout.single_tweet, null)
             val tweetBinding = SingleTweetBinding.bind(tweetView)
@@ -60,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
             binding.tweetListLinearLayout.addView(tweetView)
         }
+        lastShownTweetCount = tweets.size
     }
 
     private fun adaptTextViews(
@@ -133,10 +147,32 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
 
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = false
+        loadingView = layoutInflater.inflate(R.layout.showing_more, null)
+        loadingView.visibility = GONE
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            // Log.d(TAG, "Top refresh.")
+            binding.swipeRefreshLayout.isRefreshing = false
+            lastShownTweetCount = 0
+            binding.tweetListLinearLayout.removeAllViews()
+            tweetViewModel.resetTweets()
         }
+
+        binding.nestedScrollView.viewTreeObserver.addOnScrollChangedListener {
+            if (isScrollViewReachBottom(binding.nestedScrollView) && loadingView.visibility == GONE) {
+                loadingView.visibility = VISIBLE
+                binding.tweetListLinearLayout.addView(loadingView)
+                GlobalScope.launch(Dispatchers.IO) {
+                    // mimic network fetch
+                    delay(2000L)
+                    tweetViewModel.updateMoreTweets()
+                }
+            }
+        }
+    }
+
+    private fun isScrollViewReachBottom(nestedScrollView: NestedScrollView): Boolean {
+        return nestedScrollView.getChildAt(0).bottom <= nestedScrollView.height + nestedScrollView.scrollY
     }
 }

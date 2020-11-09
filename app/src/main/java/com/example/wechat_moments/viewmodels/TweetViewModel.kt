@@ -10,6 +10,7 @@ import com.example.wechat_moments.remote.TweetError
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 class TweetViewModel : ViewModel() {
     private val TAG = "Wechat"
@@ -25,6 +26,8 @@ class TweetViewModel : ViewModel() {
     val tweetsLiveData: LiveData<List<Tweet>>
         get() = _tweetsLiveData
 
+    var allTweets: List<Tweet> = listOf()
+
     private var repository: IRepository? = null
 
     private val defaultUser = User(
@@ -33,6 +36,7 @@ class TweetViewModel : ViewModel() {
         "drawable/sample_bg.jpeg",
         "drawable/sample_bg.jpeg"
     )
+    private val PER_REFRESH_COUNT = 5
 
     fun setRepository(repository: IRepository) {
         this.repository = repository
@@ -46,7 +50,7 @@ class TweetViewModel : ViewModel() {
             repository!!.getCurrentUser()
                 .subscribeBy(
                     onSuccess = { user ->
-                        Log.d(TAG, "requestCurrentUser: ${user.profileImage}, ${user.name}")
+                        // Log.d(TAG, "requestCurrentUser: ${user.profileImage}, ${user.name}")
                         _userLiveData.postValue(user)
                     },
                     onComplete = {
@@ -66,7 +70,11 @@ class TweetViewModel : ViewModel() {
             repository!!.getAllTweets()
                 .subscribeBy(
                     onSuccess = { tweets ->
-                        val filteredTweets = tweets.filterIsInstance<Tweet>()
+                        allTweets = tweets.filterIsInstance<Tweet>()
+                        var filteredTweets = allTweets
+                        if (allTweets.size > PER_REFRESH_COUNT) {
+                            filteredTweets = allTweets.subList(0, PER_REFRESH_COUNT)
+                        }
                         _tweetsLiveData.postValue(filteredTweets)
                     },
                     onComplete = {
@@ -75,5 +83,16 @@ class TweetViewModel : ViewModel() {
                     }
                 )
         }
+    }
+
+    fun updateMoreTweets() {
+        val currentTweetCount = _tweetsLiveData.value!!.size
+        val updateToIndex = min(currentTweetCount + PER_REFRESH_COUNT, allTweets.size)
+        _tweetsLiveData.postValue(allTweets.subList(0, updateToIndex))
+    }
+
+    fun resetTweets() {
+        val updateToIndex = min(PER_REFRESH_COUNT, allTweets.size)
+        _tweetsLiveData.postValue(allTweets.subList(0, updateToIndex))
     }
 }

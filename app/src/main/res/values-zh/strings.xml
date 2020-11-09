@@ -2,4 +2,5 @@
     <string name="app_name">微信朋友圈</string>
     <string name="user_nick">用户</string>
     <string name="colon">：</string>
+    <string name="loading">正在加载...</string>
 </resources>
